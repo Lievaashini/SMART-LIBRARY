@@ -1,3 +1,13 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package com.mycompany.libraryadtproject;
+
+/**
+ *
+ * @author LENOVO
+ */
 public class Book {
     private int isbn;
     private String title;
@@ -38,4 +48,8 @@ public class Book {
     public void setRight (Book right) {
         this.right = right;
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> b75117c (Book)
