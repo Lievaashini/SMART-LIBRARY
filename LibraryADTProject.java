@@ -9,5 +9,6 @@ public interface LibraryADTProject {
     void searchBook (int isbn);
     void borrowBook (int isbn);
     void viewLatestHistory(); 
+    //blalalaallallalala
 } 
 }
