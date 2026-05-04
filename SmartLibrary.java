@@ -15,4 +15,10 @@ public class SmartLibrary implements LibraryADT {
             System.out.println ("You have successfully borrowed book : " + isbn + ", " + b.title);
         }
     }
+
+    public void returnBook (int isbn, String title, String author){
+        catalogue.insert (isbn, title, author);
+        borrowStack.pop(isbn);
+        System.out.println ("Book returned successfully!");
+    }
 }
