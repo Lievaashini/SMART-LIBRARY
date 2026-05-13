@@ -1,5 +1,3 @@
-package com.mycompany.smartlibraryproject; 
-
 import java.util.Scanner;
 
 public class SmartLibrary implements LibraryADT {
@@ -14,11 +12,11 @@ public class SmartLibrary implements LibraryADT {
     // Return logic that only needs ISBN
     public void returnByIsbn(int isbn) {
         Book b = history.findAndRemove(isbn);
-        
-        System.out.println(""); 
+
+        System.out.println("");
         if (b != null) {
             catalogue.insert(b.getIsbn(), b.getTitle(), b.getAuthor());
-            
+
             System.out.println("--- Return Confirmation ---");
             System.out.println("ISBN   : " + b.getIsbn());
             System.out.println("Title  : " + b.getTitle());
@@ -34,12 +32,12 @@ public class SmartLibrary implements LibraryADT {
     @Override
     public void returnBook(int i, String t, String a) {
         addBook(i, t, a);
-    } 
-   
+    }
+
     @Override
     public void searchBook(int i) {
         Book b = catalogue.search(i);
-        System.out.println(""); 
+        System.out.println("");
         if (b != null) {
             System.out.println("--- Book Details Found ---");
             System.out.println("ISBN   : " + b.getIsbn());
@@ -54,17 +52,17 @@ public class SmartLibrary implements LibraryADT {
     @Override
     public void borrowBook(int i) {
         Book b = catalogue.search(i);
-        System.out.println(""); 
+        System.out.println("");
         if (b != null) {
-            history.push(b); 
-            
+            history.push(b);
+
             System.out.println("--- Borrowing Successful ---");
             System.out.println("Borrowed : " + b.getTitle());
             System.out.println("ISBN     : " + b.getIsbn());
             System.out.println("Author   : " + b.getAuthor());
             System.out.println("----------------------------");
-            
-            catalogue.remove(i); 
+
+            catalogue.remove(i);
         } else {
             System.out.println("Result: Book not in the catalogue.");
         }
@@ -72,7 +70,7 @@ public class SmartLibrary implements LibraryADT {
 
     @Override
     public void viewLatestHistory() {
-        System.out.println(""); 
+        System.out.println("");
         history.show();
     }
 
@@ -84,7 +82,7 @@ public class SmartLibrary implements LibraryADT {
             System.out.print("Choice: ");
             if (sc.hasNextInt()) {
                 choice = sc.nextInt();
-                sc.nextLine(); 
+                sc.nextLine();
                 if (choice == 6) {
                     System.out.println("\nThank you for using SmartLibrary :)");
                 } else {
@@ -103,10 +101,10 @@ public class SmartLibrary implements LibraryADT {
         System.out.println("    SMART LIBRARY MENU    ");
         System.out.println("============================");
         System.out.println("1. Add New Book");
-        System.out.println("2. Search Book (BST)"); 
+        System.out.println("2. Search Book (BST)");
         System.out.println("3. Borrow Book (Stack)");
-        System.out.println("4. View History"); 
-        System.out.println("5. Return Book"); 
+        System.out.println("4. View History");
+        System.out.println("5. Return Book");
         System.out.println("6. Exit");
     }
 
@@ -153,15 +151,15 @@ public class SmartLibrary implements LibraryADT {
     private void inputNewBook(Scanner sc) {
         int i = 0;
         boolean valid = false;
-        System.out.println(""); 
+        System.out.println("");
         while (!valid) {
             System.out.print("Enter ISBN: ");
             if (sc.hasNextInt()) {
-                i = sc.nextInt(); 
+                i = sc.nextInt();
                 sc.nextLine();
                 valid = true;
             } else {
-                System.out.println("Invalid ISBN! Please enter a number."); 
+                System.out.println("Invalid ISBN! Please enter a number.");
                 sc.next();
             }
         }
@@ -169,7 +167,7 @@ public class SmartLibrary implements LibraryADT {
         String t = sc.nextLine();
         System.out.print("Enter Author: ");
         String a = sc.nextLine();
-        
+
         addBook(i, t, a);
         System.out.println("\nResult: Book added successfully.");
     }
