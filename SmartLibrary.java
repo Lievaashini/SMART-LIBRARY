@@ -1,174 +1,85 @@
 import java.util.Scanner;
 
 public class SmartLibrary implements LibraryADT {
-    private BookBST catalogue = new BookBST();
-    private BorrowStack history = new BorrowStack();
+    private BookBST catalogue = new BookBST ();
+    private BorrowStack borrowStack = new BorrowStack  ();
 
-    @Override
-    public void addBook(int i, String t, String a) {
-        catalogue.insert(i, t, a);
-    }
+    public void runMenu (){
+        Scanner sc = new Scanner (System.in);
+        int choice = 0;
 
-    // Return logic that only needs ISBN
-    public void returnByIsbn(int isbn) {
-        Book b = history.findAndRemove(isbn);
+        while (choice != 6){
+            printMenu();
+            System.out.println ("Choice : ");
+            if (sc.hasNextInt()){
+                choice = sc.nextInt();
+                handleChoice(choice);
 
-        System.out.println("");
-        if (b != null) {
-            catalogue.insert(b.getIsbn(), b.getTitle(), b.getAuthor());
+            } else {
+                System.out.println ("Invalid input. Please try again");
+                sc.nextLine();
+            }
+        }
+        sc.close();
+    }
 
-            System.out.println("--- Return Confirmation ---");
-            System.out.println("ISBN   : " + b.getIsbn());
-            System.out.println("Title  : " + b.getTitle());
-            System.out.println("Author : " + b.getAuthor());
-            System.out.println("Result : Book returned successfully!");
-            System.out.println("Status : Record restored to Catalogue.");
-            System.out.println("---------------------------");
-        } else {
-            System.out.println("Error: This ISBN was not found in the Borrowed History.");
-        }
-    }
+    public void printMenu(){
+        System.out.println ("==== SMART LIBRARY ====");
+        System.out.println ("1. Borrow Book (Stack)");
+        System.out.println ("2. Return Book");
+        System.out.println ("3. Add New Book");
+        System.out.println ("4. View History (Show Borrowed Book)");
+        System.out.println ("5. Search Book (BST)");
+        System.out.println ("6. Exit");
+    }
 
-    @Override
-    public void returnBook(int i, String t, String a) {
-        addBook(i, t, a);
-    }
+    public void handleChoice (int choice){
+        Scanner sc = new Scanner (System.in);
+        switch (choice) {
+            case 1 :
+                System.out.println ("Enter ISBN : ");
+                int borrowIsbn = sc.nextInt();
+                sc.nextLine();
+                borrowBook (borrowIsbn);
 
-    @Override
-    public void searchBook(int i) {
-        Book b = catalogue.search(i);
-        System.out.println("");
-        if (b != null) {
-            System.out.println("--- Book Details Found ---");
-            System.out.println("ISBN   : " + b.getIsbn());
-            System.out.println("Title  : " + b.getTitle());
-            System.out.println("Author : " + b.getAuthor());
-            System.out.println("--------------------------");
-        } else {
-            System.out.println("Result: Not Found.");
-        }
-    }
+            case 2 :
+                System.out.println ("Enter ISBN : ");
+                int returnIsbn = sc.nextInt();
+                System.out.println ("Enter title : ");
+                String returnTitle = sc.nextLine();
+                System.out.println ("Enter author : ");
+                String returnAuthor = sc.nextLine();
+                returnBook (returnIsbn, returnTitle, returnAuthor);
 
-    @Override
-    public void borrowBook(int i) {
-        Book b = catalogue.search(i);
-        System.out.println("");
-        if (b != null) {
-            history.push(b);
+            case 3 :
 
-            System.out.println("--- Borrowing Successful ---");
-            System.out.println("Borrowed : " + b.getTitle());
-            System.out.println("ISBN     : " + b.getIsbn());
-            System.out.println("Author   : " + b.getAuthor());
-            System.out.println("----------------------------");
+            case 4 :
 
-            catalogue.remove(i);
-        } else {
-            System.out.println("Result: Book not in the catalogue.");
-        }
-    }
+            case 5 :
 
-    @Override
-    public void viewLatestHistory() {
-        System.out.println("");
-        history.show();
-    }
+            case 6 :
+                System.out.println ("Thank you for using SmartLibrary :D");
+        }
+        sc.close();
+    }
 
-    public void runMenu() {
-        Scanner sc = new Scanner(System.in);
-        int choice = 0;
-        while (choice != 6) {
-            printMenu();
-            System.out.print("Choice: ");
-            if (sc.hasNextInt()) {
-                choice = sc.nextInt();
-                sc.nextLine();
-                if (choice == 6) {
-                    System.out.println("\nThank you for using SmartLibrary :)");
-                } else {
-                    handleChoice(choice, sc);
-                }
-            } else {
-                System.out.println("\nInvalid input. Please enter a number (1-6).");
-                sc.next();
-            }
-        }
-        sc.close();
-    }
+    // Borrowing book method
+    public void borrowBook(int isbn){
+        Book b = catalogue.search (isbn); // search in catalogue for the book with specific isbn
 
-    private void printMenu() {
-        System.out.println("\n============================");
-        System.out.println("    SMART LIBRARY MENU    ");
-        System.out.println("============================");
-        System.out.println("1. Add New Book");
-        System.out.println("2. Search Book (BST)");
-        System.out.println("3. Borrow Book (Stack)");
-        System.out.println("4. View History");
-        System.out.println("5. Return Book");
-        System.out.println("6. Exit");
-    }
+        if (b==null){   // if book is not available in catalogue
+            System.out.println ("Book not found");
+            return;
+        } else {
+            borrowStack.push (b);   // add to borrowing stack
+            catalogue.remove (b);   // remove from the catalogue
+            System.out.println ("You have successfully borrowed book : " + isbn + ", " + b.title);
+        }
+    }
 
-    private void handleChoice(int choice, Scanner sc) {
-        switch (choice) {
-            case 1:
-                inputNewBook(sc);
-                break;
-            case 2:
-                System.out.print("\nEnter ISBN to search: ");
-                if (sc.hasNextInt()) {
-                    searchBook(sc.nextInt());
-                } else {
-                    System.out.println("Invalid input.");
-                    sc.next();
-                }
-                break;
-            case 3:
-                System.out.print("\nEnter ISBN to borrow: ");
-                if (sc.hasNextInt()) {
-                    borrowBook(sc.nextInt());
-                } else {
-                    System.out.println("Invalid input.");
-                    sc.next();
-                }
-                break;
-            case 4:
-                viewLatestHistory();
-                break;
-            case 5:
-                System.out.print("\nEnter ISBN to return: ");
-                if (sc.hasNextInt()) {
-                    returnByIsbn(sc.nextInt());
-                } else {
-                    System.out.println("Invalid input.");
-                    sc.next();
-                }
-                break;
-            default:
-                System.out.println("\nInvalid option. Please try again.");
-        }
-    }
-
-    private void inputNewBook(Scanner sc) {
-        int i = 0;
-        boolean valid = false;
-        System.out.println("");
-        while (!valid) {
-            System.out.print("Enter ISBN: ");
-            if (sc.hasNextInt()) {
-                i = sc.nextInt();
-                sc.nextLine();
-                valid = true;
-            } else {
-                System.out.println("Invalid ISBN! Please enter a number.");
-                sc.next();
-            }
-        }
-        System.out.print("Enter Title: ");
-        String t = sc.nextLine();
-        System.out.print("Enter Author: ");
-        String a = sc.nextLine();
-
-        addBook(i, t, a);
-        System.out.println("\nResult: Book added successfully.");
-    }
-}
+    public void returnBook (int isbn, String title, String author){
+        catalogue.insert (isbn, title, author);
+        borrowStack.pop(isbn);
+        System.out.println ("Book returned successfully!");
+    }
+} 
