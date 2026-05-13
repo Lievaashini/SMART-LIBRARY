@@ -1,120 +1,176 @@
+package com.mycompany.smartlibraryproject; 
+
 import java.util.Scanner;
 
 public class SmartLibrary implements LibraryADT {
     private BookBST catalogue = new BookBST();
-    private BorrowStack borrowStack = new BorrowStack();
+    private BorrowStack history = new BorrowStack();
+
+    @Override
+    public void addBook(int i, String t, String a) {
+        catalogue.insert(i, t, a);
+    }
+
+    // Return logic that only needs ISBN
+    public void returnByIsbn(int isbn) {
+        Book b = history.findAndRemove(isbn);
+        
+        System.out.println(""); 
+        if (b != null) {
+            catalogue.insert(b.getIsbn(), b.getTitle(), b.getAuthor());
+            
+            System.out.println("--- Return Confirmation ---");
+            System.out.println("ISBN   : " + b.getIsbn());
+            System.out.println("Title  : " + b.getTitle());
+            System.out.println("Author : " + b.getAuthor());
+            System.out.println("Result : Book returned successfully!");
+            System.out.println("Status : Record restored to Catalogue.");
+            System.out.println("---------------------------");
+        } else {
+            System.out.println("Error: This ISBN was not found in the Borrowed History.");
+        }
+    }
+
+    @Override
+    public void returnBook(int i, String t, String a) {
+        addBook(i, t, a);
+    } 
+   
+    @Override
+    public void searchBook(int i) {
+        Book b = catalogue.search(i);
+        System.out.println(""); 
+        if (b != null) {
+            System.out.println("--- Book Details Found ---");
+            System.out.println("ISBN   : " + b.getIsbn());
+            System.out.println("Title  : " + b.getTitle());
+            System.out.println("Author : " + b.getAuthor());
+            System.out.println("--------------------------");
+        } else {
+            System.out.println("Result: Not Found.");
+        }
+    }
+
+    @Override
+    public void borrowBook(int i) {
+        Book b = catalogue.search(i);
+        System.out.println(""); 
+        if (b != null) {
+            history.push(b); 
+            
+            System.out.println("--- Borrowing Successful ---");
+            System.out.println("Borrowed : " + b.getTitle());
+            System.out.println("ISBN     : " + b.getIsbn());
+            System.out.println("Author   : " + b.getAuthor());
+            System.out.println("----------------------------");
+            
+            catalogue.remove(i); 
+        } else {
+            System.out.println("Result: Book not in the catalogue.");
+        }
+    }
+
+    @Override
+    public void viewLatestHistory() {
+        System.out.println(""); 
+        history.show();
+    }
 
     public void runMenu() {
         Scanner sc = new Scanner(System.in);
         int choice = 0;
-
         while (choice != 6) {
             printMenu();
-            System.out.print("Choice : "); 
+            System.out.print("Choice: ");
             if (sc.hasNextInt()) {
                 choice = sc.nextInt();
                 sc.nextLine(); 
-                handleChoice(choice);
+                if (choice == 6) {
+                    System.out.println("\nThank you for using SmartLibrary :)");
+                } else {
+                    handleChoice(choice, sc);
+                }
             } else {
-                System.out.println("Invalid input. Please try again"); 
-                sc.nextLine(); 
+                System.out.println("\nInvalid input. Please enter a number (1-6).");
+                sc.next();
             }
         }
         sc.close();
     }
 
-    public void printMenu() {
-        System.out.println("\n==== SMART LIBRARY ===="); 
-        System.out.println("1. Borrow Book"); 
-        System.out.println("2. Return Book (Add to Catalogue)"); 
-        System.out.println("3. Show Available Books");
-        System.out.println("4. Show Borrowing History (Stack)"); 
-        System.out.println("5. Search Book (BST)"); 
+    private void printMenu() {
+        System.out.println("\n============================");
+        System.out.println("    SMART LIBRARY MENU    ");
+        System.out.println("============================");
+        System.out.println("1. Add New Book");
+        System.out.println("2. Search Book (BST)"); 
+        System.out.println("3. Borrow Book (Stack)");
+        System.out.println("4. View History"); 
+        System.out.println("5. Return Book"); 
         System.out.println("6. Exit");
     }
 
-    public void handleChoice(int choice) {
-        Scanner sc = new Scanner(System.in);
+    private void handleChoice(int choice, Scanner sc) {
         switch (choice) {
             case 1:
-                System.out.print("Enter ISBN to borrow: "); 
+                inputNewBook(sc);
+                break;
+            case 2:
+                System.out.print("\nEnter ISBN to search: ");
+                if (sc.hasNextInt()) {
+                    searchBook(sc.nextInt());
+                } else {
+                    System.out.println("Invalid input.");
+                    sc.next();
+                }
+                break;
+            case 3:
+                System.out.print("\nEnter ISBN to borrow: ");
                 if (sc.hasNextInt()) {
                     borrowBook(sc.nextInt());
+                } else {
+                    System.out.println("Invalid input.");
+                    sc.next();
                 }
-                break; // Added break to stop fall-through
-
-            case 2:
-                System.out.print("Enter ISBN: "); 
-                int rIsbn = sc.nextInt(); sc.nextLine();
-                System.out.print("Enter Title: "); 
-                String rTitle = sc.nextLine();
-                System.out.print("Enter Author: "); 
-                String rAuthor = sc.nextLine();
-                returnBook(rIsbn, rTitle, rAuthor);
-                break; 
-
-            case 3:
-                System.out.println("Catalogue (Available Books):");
-                // This would typically call a display method in your BST
                 break;
-
             case 4:
-                viewLatestHistory(); // Displays Stack LIFO 
+                viewLatestHistory();
                 break;
-
             case 5:
-                System.out.print("Enter ISBN to search: "); 
+                System.out.print("\nEnter ISBN to return: ");
                 if (sc.hasNextInt()) {
-                    searchBook(sc.nextInt()); // Uses your Record Finder search 
+                    returnByIsbn(sc.nextInt());
+                } else {
+                    System.out.println("Invalid input.");
+                    sc.next();
                 }
                 break;
-
-            case 6:
-                System.out.println("Thank you for using SmartLibrary :D");
-                break;
-                
             default:
-                System.out.println("Invalid option."); 
+                System.out.println("\nInvalid option. Please try again.");
         }
     }
 
-    // Record Finder Search Implementation
-    @Override
-    public void searchBook(int isbn) {
-        Book b = catalogue.search(isbn); // Your recursive BST search
-        if (b != null) {
-            System.out.println("Found: " + b.getTitle() + " by " + b.getAuthor()); 
-        } else {
-            System.out.println("Book not found."); 
+    private void inputNewBook(Scanner sc) {
+        int i = 0;
+        boolean valid = false;
+        System.out.println(""); 
+        while (!valid) {
+            System.out.print("Enter ISBN: ");
+            if (sc.hasNextInt()) {
+                i = sc.nextInt(); 
+                sc.nextLine();
+                valid = true;
+            } else {
+                System.out.println("Invalid ISBN! Please enter a number."); 
+                sc.next();
+            }
         }
-    }
-
-    @Override
-    public void borrowBook(int isbn) {
-        Book b = catalogue.search(isbn); // Search before borrowing 
-
-        if (b == null) {
-            System.out.println("Book not in catalogue."); 
-        } else {
-            borrowStack.push(b); // Move record to history stack 
-            catalogue.remove(isbn); // Remove from catalogue logic 
-            System.out.println("Successfully borrowed: " + b.getTitle()); 
-        }
-    }
-
-    // History Logic
-    @Override
-    public void viewLatestHistory() {
-        borrowStack.show(); // Requirement: LIFO order 
-    }
-
-    @Override
-    public void addBook(int isbn, String title, String author) {
-        catalogue.insert(isbn, title, author); 
-    }
-
-    public void returnBook(int isbn, String title, String author) {
-        addBook(isbn, title, author);
-        System.out.println("Book returned and added back to catalogue successfully!");
+        System.out.print("Enter Title: ");
+        String t = sc.nextLine();
+        System.out.print("Enter Author: ");
+        String a = sc.nextLine();
+        
+        addBook(i, t, a);
+        System.out.println("\nResult: Book added successfully.");
     }
 }
