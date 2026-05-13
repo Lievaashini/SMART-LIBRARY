@@ -1,0 +1,9 @@
+package com.mycompany.smartlibraryproject; 
+
+public interface LibraryADT {
+    void addBook(int i, String t, String a);
+    void searchBook(int i);
+    void borrowBook(int i);
+    void returnBook(int i, String t, String a);
+    void viewLatestHistory();
+}
