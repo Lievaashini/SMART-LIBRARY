@@ -1,5 +1,3 @@
-package com.mycompany.smartlibraryproject; 
-
 import java.util.Stack;
 
 public class BorrowStack {

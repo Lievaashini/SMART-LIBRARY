@@ -1,8 +1,3 @@
-
-package com.mycompany.smartlibraryproject; 
-
-package smartlibraryproject;
-
 public class BookBST {
     private Book root;
 

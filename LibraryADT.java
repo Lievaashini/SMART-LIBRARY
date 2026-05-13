@@ -1,5 +1,3 @@
-package com.mycompany.smartlibraryproject; 
-
 public interface LibraryADT {
     void addBook(int i, String t, String a);
     void searchBook(int i);
