@@ -8,7 +8,7 @@ public class SmartLibrary implements LibraryADT {
         Scanner sc = new Scanner (System.in);
         int choice = 0;
 
-        while (choice != 6){
+        while (choice != 5){
             printMenu();
             System.out.println ("Choice : ");
             if (sc.hasNextInt()){
@@ -24,37 +24,19 @@ public class SmartLibrary implements LibraryADT {
     }
 
     public void printMenu(){
-        System.out.println ("==== SMART LIBRARY ====");
-        System.out.println ("1. Borrow Book (Stack)");
-        System.out.println ("2. Return Book");
-        System.out.println ("3. Add New Book");
-        System.out.println ("4. View History (Show Borrowed Book)");
-        System.out.println ("5. Search Book (BST)");
-        System.out.println ("6. Exit");
+        System.out.println ("--- SmartLibrary Menu ---");
+        System.out.println ("1. Add Book");
+        System.out.println ("2. Search (BST)");
+        System.out.println ("3. Borrow (Stack)");
+        System.out.println ("4. History");
+        System.out.println ("5. Exit");
     }
 
     public void handleChoice (int choice){
         Scanner sc = new Scanner (System.in);
         switch (choice) {
 
-            case 1 :
-                System.out.println ("Enter ISBN : ");
-                int borrowIsbn = sc.nextInt();
-                sc.nextLine();
-                borrowBook (borrowIsbn);
-                break;
-
-            case 2 :
-                System.out.println ("Enter ISBN : ");
-                int returnIsbn = sc.nextInt();
-                System.out.println ("Enter title : ");
-                String returnTitle = sc.nextLine();
-                System.out.println ("Enter author : ");
-                String returnAuthor = sc.nextLine();
-                returnBook (returnIsbn, returnTitle, returnAuthor);
-                break;
-
-            case 3 :
+            case 1 :    // Add book
                 System.out.println ("Enter ISBN : ");
                 int newIsbn = sc.nextInt();
                 sc.nextLine();
@@ -65,18 +47,25 @@ public class SmartLibrary implements LibraryADT {
                 addBook(newIsbn, newTitle, newAuthor);
                 break;
 
-            case 4 :
-                viewLatestHistory();
-                break;
-
-            case 5 :
+            case 2 :    // Search book
                 System.out.println ("Enter ISBN : ");
                 int searchIsbn = sc.nextInt();
                 sc.nextLine();
                 searchBook(searchIsbn);
                 break;
 
-            case 6 :
+            case 3 :    // Borrow book
+                System.out.println ("Enter ISBN : ");
+                int borrowIsbn = sc.nextInt();
+                sc.nextLine();
+                borrowBook (borrowIsbn);
+                break;
+
+            case 4 :    // View borrowed history
+                viewLatestHistory();
+                break;
+
+            case 5 :    // Exit program
                 System.out.println ("Thank you for using SmartLibrary :D");
                 break;
         }
@@ -88,7 +77,7 @@ public class SmartLibrary implements LibraryADT {
         Book b = catalogue.search (isbn); // search in catalogue for the book with specific isbn
 
         if (b==null){   // if book is not available in catalogue
-            System.out.println ("Book not found");
+            System.out.println ("Book not in catalogue. ");
             return;
         } else {
             borrowStack.push (b);   // add to borrowing stack
@@ -97,11 +86,11 @@ public class SmartLibrary implements LibraryADT {
         }
     }
 
-    public void returnBook (int isbn, String title, String author){
-        catalogue.insert (isbn, title, author);
-        borrowStack.pop();
-        System.out.println ("Book returned successfully!");
-    }
+        public void returnBook (int isbn, String title, String author){
+            catalogue.insert (isbn, title, author);
+            borrowStack.pop();
+            System.out.println ("Book returned successfully!");
+        }
 
     @Override
     public void addBook(int isbn, String title, String author) {
