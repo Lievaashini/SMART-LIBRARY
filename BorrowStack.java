@@ -1,13 +1,5 @@
-   /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
-
 import java.util.Stack;
 
-/**
- *
- * @author Asus
- */
 public class BorrowStack {
     
     //Create stack to store Book objects
@@ -18,7 +10,7 @@ public class BorrowStack {
         
     stack.push(b);
     
-    System.out.println(b.title + " added to borrowing history");
+    System.out.println(b.getTitle() + " added to borrowing history");
     }
     
     //POP
@@ -63,7 +55,7 @@ public class BorrowStack {
                 
                 Book b = stack.get(i);
                 
-                System.out.println ("[ISBN: " + b.isbn +"] "+ b.title + " by " + b.author);
+                System.out.println ("[ISBN: " + b.getIsbn() +"] "+ b.getTitle() + " by " + b.getAuthor());
             }
         }
     }
