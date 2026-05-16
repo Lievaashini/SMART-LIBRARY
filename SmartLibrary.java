@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 public class SmartLibrary implements LibraryADT {
     private BookBST catalogue = new BookBST ();
-    private BorrowStack borrowStack = new BorrowStack ();
+    private BorrowStack borrowStack = new BorrowStack  ();
 
     public void runMenu (){
         Scanner sc = new Scanner (System.in);
@@ -36,15 +36,13 @@ public class SmartLibrary implements LibraryADT {
     public void handleChoice (int choice){
         Scanner sc = new Scanner (System.in);
         switch (choice) {
-
-            case 1 :    // Borrow book
+            case 1 :
                 System.out.println ("Enter ISBN : ");
                 int borrowIsbn = sc.nextInt();
                 sc.nextLine();
                 borrowBook (borrowIsbn);
-                break;
 
-            case 2 :    // Return book
+            case 2 :
                 System.out.println ("Enter ISBN : ");
                 int returnIsbn = sc.nextInt();
                 System.out.println ("Enter title : ");
@@ -54,75 +52,36 @@ public class SmartLibrary implements LibraryADT {
                 returnBook (returnIsbn, returnTitle, returnAuthor);
                 break;
 
-            case 3 :    // Add new book
-                System.out.println ("Enter ISBN : ");
-                int newIsbn = sc.nextInt();
-                sc.nextLine();
-                System.out.println ("Enter title : ");
-                String newTitle = sc.nextLine();
-                System.out.println ("Enter author : ");
-                String newAuthor = sc.nextLine();
-                addBook(newIsbn, newTitle, newAuthor);
+            case 3 :
                 break;
-
-            case 4 :    // View History (Show Borrowed Book)
-                viewLatestHistory();
+            case 4 :
                 break;
-
-            case 5 :    // Search Book (BST)
-                System.out.println ("Enter ISBN : ");
-                int searchIsbn = sc.nextInt();
-                sc.nextLine();
-                searchBook(searchIsbn);
+            case 5 :
                 break;
-
-            case 6 :    // Exit
+            case 6 :
                 System.out.println ("Thank you for using SmartLibrary :D");
                 break;
-                
-            default :   // Invalid input
-                System.out.println ("Invalid input. Please try again");
         }
         sc.close();
     }
 
+// Borrowing book method
     public void borrowBook(int isbn){
         Book b = catalogue.search (isbn); // search in catalogue for the book with specific isbn
 
-        if (b==null){ // if book is not available in catalogue
+        if (b==null){   // if book is not available in catalogue
             System.out.println ("Book not found");
             return;
         } else {
-            borrowStack.push (b);   // add to borrowing stack
-            catalogue.remove (b.getIsbn());   // remove from the catalogue
-            System.out.println ("You have successfully borrowed book : " + b.getIsbn() + ", " + b.getTitle());
-            }
+            borrowStack.push (b);   // add to borrowing stack
+            catalogue.remove (b);   // remove from the catalogue
+            System.out.println ("You have successfully borrowed book : " + isbn + ", " + b.title);
+        }
     }
 
     public void returnBook (int isbn, String title, String author){
         catalogue.insert (isbn, title, author);
-        borrowStack.pop();
+        borrowStack.pop(isbn);
         System.out.println ("Book returned successfully!");
-    }
-
-    @Override
-    public void addBook(int isbn, String title, String author) {
-        catalogue.insert(isbn, title, author);
-        System.out.println ("Book added successfully!");
-    }
-
-    @Override
-    public void searchBook(int isbn) {
-        Book b = catalogue.search(isbn);
-        if (b == null) {
-            System.out.println ("Book not found.");
-        } else {
-            System.out.println ("Found: [ISBN: " + b.getIsbn() + "] " + b.getTitle() + " by " + b.getAuthor());
-        }
-    }
-
-    @Override
-    public void viewLatestHistory() {
-        borrowStack.show();
     }
 } 
