@@ -13,7 +13,8 @@ public class SmartLibrary implements LibraryADT {
             System.out.println ("Choice : ");
             if (sc.hasNextInt()){
                 choice = sc.nextInt();
-                handleChoice(choice);
+                sc.nextLine();
+                handleChoice(choice, sc);
 
             } else {
                 System.out.println ("Invalid input. Please try again");
@@ -32,8 +33,7 @@ public class SmartLibrary implements LibraryADT {
         System.out.println ("5. Exit");
     }
 
-    public void handleChoice (int choice){
-        Scanner sc = new Scanner (System.in);
+    public void handleChoice (int choice, Scanner sc){
         switch (choice) {
 
             case 1 :    // Add book
@@ -68,8 +68,10 @@ public class SmartLibrary implements LibraryADT {
             case 5 :    // Exit program
                 System.out.println ("Thank you for using SmartLibrary :D");
                 break;
+                
+            default :
+                System.out.println ("Invalid input. Please try again");
         }
-        sc.close();
     }
 
 // Borrowing book method
