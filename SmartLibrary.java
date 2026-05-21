@@ -25,7 +25,7 @@ public class SmartLibrary implements LibraryADT {
     }
 
     public void printMenu(){
-        System.out.println ("--- SmartLibrary Menu ---");
+        System.out.println ("\n--- SmartLibrary Menu ---");
         System.out.println ("1. Add Book");
         System.out.println ("2. Search (BST)");
         System.out.println ("3. Borrow (Stack)");
@@ -37,8 +37,14 @@ public class SmartLibrary implements LibraryADT {
         switch (choice) {
 
             case 1 :    // Add book
+                int newIsbn = 0;
                 System.out.println ("Enter ISBN : ");
-                int newIsbn = sc.nextInt();
+                if (sc.hasNextInt()) {
+                    newIsbn = sc.nextInt();
+                } else {
+                    System.out.println("Invalid ISBN! Please enter numbers only.");
+                    sc.nextLine();
+                }
                 sc.nextLine();
                 System.out.println ("Enter title : ");
                 String newTitle = sc.nextLine();
@@ -48,9 +54,14 @@ public class SmartLibrary implements LibraryADT {
                 break;
 
             case 2 :    // Search book
+                int searchIsbn = 0;
                 System.out.println ("Enter ISBN : ");
-                int searchIsbn = sc.nextInt();
-                sc.nextLine();
+                if (sc.hasNextInt()) {
+                    searchIsbn = sc.nextInt();
+                } else {
+                    System.out.println("Invalid ISBN! Please enter numbers only.");
+                    sc.nextLine();
+                }
                 searchBook(searchIsbn);
                 break;
 
