@@ -97,7 +97,6 @@ public class SmartLibrary implements LibraryADT {
                     // Looks for the book in the borrowing history stack
                     Book b = borrowStack.findAndRemove(returnIsbn);
 
-                    System.out.println("\n--- Return Transaction ---");
                     if (b != null) {
                         // Restores it back to the catalogue BST structure
                         catalogue.insert(b.getIsbn(), b.getTitle(), b.getAuthor());
@@ -107,7 +106,6 @@ public class SmartLibrary implements LibraryADT {
                         System.out.println("Author : " + b.getAuthor());
                         System.out.println("Result : Book returned successfully!");
                         System.out.println("Status : Record restored to Catalogue.");
-                        System.out.println("---------------------------");
                     } else {
                         System.out.println("Error: This ISBN was not found in the Borrowed History.");
                     }
