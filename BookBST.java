@@ -56,4 +56,17 @@ public class BookBST {
         while (node.getLeft() != null) node = node.getLeft();
         return node;
     }
+    
+    // EXTRA FEATURE: Simple Node Count using standard Recursion
+    public int getBookCount() {
+        return countNodes(root);
+    }
+
+    private int countNodes(Book current) {
+        if (current == null) {
+            return 0; // Base Case: empty spot counts as 0
+        }
+        // Count this book (1) + left subtree books + right subtree books
+        return 1 + countNodes(current.getLeft()) + countNodes(current.getRight());
+    }
 }
