@@ -10,7 +10,7 @@ public class SmartLibrary implements LibraryADT {
 
         while (choice != 7){
             printMenu();
-            System.out.print ("Choice : ");
+            System.out.println ("Choice : ");
             if (sc.hasNextInt()){
                 choice = sc.nextInt();
                 sc.nextLine();
