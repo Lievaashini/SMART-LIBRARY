@@ -48,7 +48,7 @@ public class BorrowStack {
         }
     
         else{
-            System.out.println("\n BORROWING HISTORY ");
+            System.out.println("\n=== Borrowing History ===");
             
             // Stack from top of stack
             for (int i = stack.size() - 1; i >= 0; i--){
@@ -57,6 +57,7 @@ public class BorrowStack {
                 
                 System.out.println ("[ISBN: " + b.getIsbn() +"] "+ b.getTitle() + " by " + b.getAuthor());
             }
+            System.out.println("-------------------------");   
         }
     }
 
