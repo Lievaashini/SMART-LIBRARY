@@ -98,6 +98,7 @@ public class SmartLibrary implements LibraryADT {
                     // Looks for the book in the borrowing history stack
                     Book b = borrowStack.findAndRemove(returnIsbn);
 
+                    System.out.println("\n--- Return Transaction ---");
                     if (b != null) {
                         // Restores it back to the catalogue BST structure
                         catalogue.insert(b.getIsbn(), b.getTitle(), b.getAuthor());
@@ -111,6 +112,7 @@ public class SmartLibrary implements LibraryADT {
                     } else {
                         System.out.println("Error: This ISBN was not found in the Borrowed History.");
                     }
+                    System.out.println("--------------------------");
                 } else {
                     System.out.println("Invalid ISBN! Please enter numbers only.");
                     sc.nextLine();
@@ -137,38 +139,48 @@ public class SmartLibrary implements LibraryADT {
 // Borrowing book method
     public void borrowBook(int isbn){
         Book b = catalogue.search (isbn); // search in catalogue for the book with specific isbn
-
+        
+        System.out.println("\n--- Borrow Transaction ---");
         if (b==null){   // if book is not available in catalogue
-            System.out.println ("Book not in catalogue. ");
+            System.out.println ("Result: Book not in catalogue. ");
             return;
         } else {
             borrowStack.push (b);   // add to borrowing stack
             catalogue.remove (b.getIsbn());   // remove from the catalogue
             System.out.println ("You have successfully borrowed book : " + isbn + ", " + b.getTitle());
         }
+        System.out.println("--------------------------");
     }
 
         public void returnBook (int isbn, String title, String author){
             catalogue.insert (isbn, title, author);
             borrowStack.pop();
+            System.out.println("\n--- Return Transaction ---");
+            System.out.println("ISBN   : " + isbn);
+            System.out.println("Title  : " + title);
             System.out.println ("Book returned successfully!");
+            System.out.println("--------------------------");
         }
 
     @Override
     public void addBook(int isbn, String title, String author) {
         catalogue.insert(isbn, title, author);
         saveBookToFile(isbn, title, author);
-        System.out.println ("Book added successfully!");
+        System.out.println("\n--- Book Registration ---");
+        System.out.println ("Result: Book added successfully!");
+        System.out.println("-------------------------");
     }
 
     @Override
     public void searchBook(int isbn) {
         Book b = catalogue.search(isbn);
+        System.out.println("\n--- Search Results ---");
         if (b == null) {
-            System.out.println ("Book not found.");
+            System.out.println ("Result: Book not found.");
         } else {
             System.out.println ("Found: [ISBN: " + b.getIsbn() + "] " + b.getTitle() + " by " + b.getAuthor());
         }
+        System.out.println("----------------------");
     }
 
     @Override
