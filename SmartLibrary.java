@@ -37,13 +37,14 @@ public class SmartLibrary implements LibraryADT {
         System.out.println ("\n--- SmartLibrary Menu ---");
         System.out.println ("1. Add New Book");
         System.out.println ("2. Search Book (BST)");
-        System.out.println ("3. Borrow Book (Stack)");
-        System.out.println ("4. View History");
-        System.out.println ("5. Return Book");
-        System.out.println ("6. View Total Book Count");
-        System.out.println ("7. Add Fine Record");
-        System.out.println ("8. View Fines");
-        System.out.println ("9. Exit"); 
+        System.out.println ("3. Search Book By Title");
+        System.out.println ("4. Borrow Book (Stack)");
+        System.out.println ("5. View History");
+        System.out.println ("6. Return Book");
+        System.out.println ("7. View Total Book Count");
+        System.out.println ("8. Add Fine Record");
+        System.out.println ("9. View Fines");
+        System.out.println ("10. Exit"); 
     }
 
     public void handleChoice (int choice, Scanner sc){
@@ -77,7 +78,14 @@ public class SmartLibrary implements LibraryADT {
                 searchBook(searchIsbn);
                 break;
 
-            case 3 :    // Borrow book     
+            case 3 : // Search book by title
+            sc.nextLine();
+            System.out.print("Enter book title: ");
+            String title = sc.nextLine();
+            searchBookByTitle(title);
+            break;
+
+            case 4 :    // Borrow book     
                 System.out.println ("Enter ISBN : ");
                 if (sc.hasNextInt()) {
                      int borrowIsbn = sc.nextInt();
@@ -89,11 +97,11 @@ public class SmartLibrary implements LibraryADT {
                 }
                 break;
 
-            case 4 :    // View borrowed history
+            case 5 :    // View borrowed history
                 viewLatestHistory();
                 break;
 
-            case 5 :    // Return book 
+            case 6 :    // Return book 
                 System.out.println("\nEnter ISBN to return : ");
                 if (sc.hasNextInt()) {
                     int returnIsbn = sc.nextInt();
@@ -120,7 +128,7 @@ public class SmartLibrary implements LibraryADT {
                 }
                 break;
 
-             case 6 :    // Extra feature: View Total Book Count
+             case 7 :    // Extra feature: View Total Book Count
                 System.out.println(""); 
                 System.out.println("--- Library Statistics ---");
                 System.out.println("Available Books in Catalogue   : " + catalogue.getBookCount());
@@ -128,7 +136,7 @@ public class SmartLibrary implements LibraryADT {
                 System.out.println("--------------------------");
                 break;
 
-             case 7 :    // Extra feature: Add fine record
+             case 8 :    // Extra feature: Add fine record
                 System.out.println("\n--- Add Fine Record ---");
                 System.out.print("Enter ISBN: ");
                 int isbn = sc.nextInt();
@@ -142,10 +150,10 @@ public class SmartLibrary implements LibraryADT {
                 System.out.println("Fine record added successfully!");
                 break;
 
-             case 8 :    // Extra feature: View fine records
+             case 9 :    // Extra feature: View fine records
                 fineManager.displayFines();
 
-             case 9 :    // Exit program
+             case 10 :    // Exit program
                 fineManager.saveFinesToFile();
                 System.out.println ("Thank you for using SmartLibrary :D");
                 break;
