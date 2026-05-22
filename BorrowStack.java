@@ -59,4 +59,9 @@ public class BorrowStack {
             }
         }
     }
+
+    // EXTRA FEATURE: Use built-in stack size method for the total count
+    public int getBorrowedCount() {
+        return stack.size();
+    }   
 }
