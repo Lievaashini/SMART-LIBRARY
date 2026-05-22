@@ -52,7 +52,6 @@ public class SmartLibrary implements LibraryADT {
                     newIsbn = sc.nextInt();
                 } else {
                     System.out.println("Invalid ISBN! Please enter numbers only.");
-                    sc.next();
                 }
                 sc.nextLine();
                 System.out.println ("Enter title : ");
@@ -218,10 +217,10 @@ public class SmartLibrary implements LibraryADT {
                 String[] data = line.split(",");
                 
                 if (data.length == 3) {
-                    int isbn = Integer.parseInt(data[0].trim());
+                    String cleanIsbnStr = data[0].replaceAll("[^0-9]", "").trim();
+                    int isbn = Integer.parseInt(cleanIsbnStr);
                     String title = data[1].trim();
                     String author = data[2].trim();
-                    
                     catalogue.insert(isbn, title, author);
                 }
             }
