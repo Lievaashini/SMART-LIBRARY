@@ -8,7 +8,7 @@ public class SmartLibrary implements LibraryADT {
         Scanner sc = new Scanner (System.in);
         int choice = 0;
 
-        while (choice != 5){
+        while (choice != 7){
             printMenu();
             System.out.println ("Choice : ");
             if (sc.hasNextInt()){
@@ -26,11 +26,13 @@ public class SmartLibrary implements LibraryADT {
 
     public void printMenu(){
         System.out.println ("\n--- SmartLibrary Menu ---");
-        System.out.println ("1. Add Book");
-        System.out.println ("2. Search (BST)");
-        System.out.println ("3. Borrow (Stack)");
-        System.out.println ("4. History");
-        System.out.println ("5. Exit");
+        System.out.println ("1. Add New Book");
+        System.out.println ("2. Search Book (BST)");
+        System.out.println ("3. Borrow Book (Stack)");
+        System.out.println ("4. View History");
+        System.out.println ("5. Return Book");
+        System.out.println ("6. View Total Book Count");
+        System.out.println ("7. Exit"); 
     }
 
     public void handleChoice (int choice, Scanner sc){
@@ -76,7 +78,42 @@ public class SmartLibrary implements LibraryADT {
                 viewLatestHistory();
                 break;
 
-            case 5 :    // Exit program
+            case 5 :    // Return book 
+                System.out.println("\nEnter ISBN to return : ");
+                if (sc.hasNextInt()) {
+                    int returnIsbn = sc.nextInt();
+                    sc.nextLine();
+                    // Looks for the book in the borrowing history stack
+                    Book b = borrowStack.findAndRemove(returnIsbn);
+
+                    if (b != null) {
+                        // Restores it back to the catalogue BST structure
+                        catalogue.insert(b.getIsbn(), b.getTitle(), b.getAuthor());
+                        System.out.println("\n--- Return Confirmation ---");
+                        System.out.println("ISBN   : " + b.getIsbn());
+                        System.out.println("Title  : " + b.getTitle());
+                        System.out.println("Author : " + b.getAuthor());
+                        System.out.println("Result : Book returned successfully!");
+                        System.out.println("Status : Record restored to Catalogue.");
+                        System.out.println("---------------------------");
+                    } else {
+                        System.out.println("Error: This ISBN was not found in the Borrowed History.");
+                    }
+                } else {
+                    System.out.println("Invalid ISBN! Please enter numbers only.");
+                    sc.nextLine();
+                }
+                break;
+
+             case 6 :    // Extra feature: View Total Book Count
+                System.out.println(""); 
+                System.out.println("--- Library Statistics ---");
+                System.out.println("Available Books in Catalogue   : " + catalogue.getBookCount());
+                System.out.println("Total Books Currently Borrowed : " + borrowStack.getBorrowedCount());
+                System.out.println("--------------------------");
+                break;
+
+             case 7 :    // Exit program
                 System.out.println ("Thank you for using SmartLibrary :D");
                 break;
                 
