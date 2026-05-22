@@ -19,4 +19,3 @@
 1019,Console Interface Design,UI Master
 1020,The Art of Hiding Information,Alan Turing
 1021,Streets of George Town,Khoo Su Nin
-101,Harry Potter,J.K Rowling
