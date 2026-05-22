@@ -1,0 +1,20 @@
+1015,The Java Blueprint,James Gosling
+1003,Data Structures Demystified,Charles Node
+1008,Algorithms Unlocked,Thomas Cormen
+1020,The Art of Hiding Information,Alan Turing
+1012,Clean Code Essentials,Robert Martin
+1005,The Binary Tree Odyssey,Grace Hopper
+1017,Stuck on Stacks,Donald Knuth
+1001,Introduction to Systems,Ada Lovelace
+1010,Object Oriented Design Patterns,Erich Gamma
+1014,The Recursive Mind,Margaret Hamilton
+1006,Logarithmic Efficiency,Claude Shannon
+1019,Console Interface Design,UI Master
+1002,The Balanced Tree Guide,Adelson Velsky
+1011,Memory Management Secrets,John von Neumann
+1007,The LIFO Principle,Stack Specialist
+1016,Abstract Data Types Volume 1,Barbara Liskov
+1004,Database Indices Explained,Edgar Codd
+1013,The Smart Library Blueprint,Project Lead
+1009,Debugging at Midnight,Bug Hunter
+1018,The Agile Coordinator,Scrum Guru
