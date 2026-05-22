@@ -8,14 +8,16 @@ import java.io.IOException;
 public class SmartLibrary implements LibraryADT {
     private BookBST catalogue = new BookBST ();
     private BorrowStack borrowStack = new BorrowStack ();
+    private FineManager fineManager = new FineManager();
 
     public void runMenu (){
         loadCatalogueFromFile();
+        fineManager.loadFinesFromFile();
 
         Scanner sc = new Scanner (System.in);
         int choice = 0;
 
-        while (choice != 7){
+        while (choice != 9){
             printMenu();
             System.out.println ("Choice : ");
             if (sc.hasNextInt()){
@@ -39,7 +41,9 @@ public class SmartLibrary implements LibraryADT {
         System.out.println ("4. View History");
         System.out.println ("5. Return Book");
         System.out.println ("6. View Total Book Count");
-        System.out.println ("7. Exit"); 
+        System.out.println ("7. Add Fine Record");
+        System.out.println ("8. View Fines");
+        System.out.println ("9. Exit"); 
     }
 
     public void handleChoice (int choice, Scanner sc){
@@ -124,7 +128,25 @@ public class SmartLibrary implements LibraryADT {
                 System.out.println("--------------------------");
                 break;
 
-             case 7 :    // Exit program
+             case 7 :    // Extra feature: Add fine record
+                System.out.println("\n--- Add Fine Record ---");
+                System.out.print("Enter ISBN: ");
+                int isbn = sc.nextInt();
+                sc.nextLine();
+                System.out.print("Enter Student Name: ");
+                String studentName = sc.nextLine();
+                System.out.print("Enter Overdue Days: ");
+                int overdueDays = sc.nextInt();
+                sc.nextLine();
+                fineManager.addFine(isbn, studentName, overdueDays);
+                System.out.println("Fine record added successfully!");
+                break;
+
+             case 8 :    // Extra feature: View fine records
+                fineManager.displayFines();
+
+             case 9 :    // Exit program
+                fineManager.saveFinesToFile();
                 System.out.println ("Thank you for using SmartLibrary :D");
                 break;
                 
