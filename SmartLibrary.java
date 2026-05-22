@@ -203,6 +203,20 @@ public class SmartLibrary implements LibraryADT {
     }
 
     @Override
+    public void searchBookByTitle(String title) {
+        Book foundBook = catalogue.searchBookByTitle(title);
+
+        if (foundBook != null) {
+            System.out.println("Book found!");
+            System.out.println("ISBN: " + foundBook.getIsbn());
+            System.out.println("Title: " + foundBook.getTitle());
+            System.out.println("Author: " + foundBook.getAuthor());
+        } else {
+            System.out.println("Book not found!");
+        }
+    }
+
+    @Override
     public void viewLatestHistory() {
         borrowStack.show();
     }

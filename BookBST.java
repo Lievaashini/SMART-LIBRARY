@@ -33,6 +33,29 @@ public class BookBST {
         return searchRec(current.getRight(), i);
     }
 
+    public Book searchBookByTitle(String title) {
+    return searchTitleRec(root, title);
+}
+
+private Book searchTitleRec(Book current, String title) {
+
+    if (current == null) {
+        return null;
+    }
+
+    if (current.getTitle().equalsIgnoreCase(title)) {
+        return current;
+    }
+
+    Book found = searchTitleRec(current.getLeft(), title);
+
+    if (found != null) {
+        return found;
+    }
+
+    return searchTitleRec(current.getRight(), title);
+}
+
     // TASK 5: Admin Logic - Handle removing from catalogue 
     public void remove(int i) {
         root = deleteRec(root, i);
