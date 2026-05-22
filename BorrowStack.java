@@ -48,7 +48,7 @@ public class BorrowStack {
         }
     
         else{
-            System.out.println("\n=== Borrowing History ===");
+            System.out.println("\n--- Borrowing History ---");
             
             // Stack from top of stack
             for (int i = stack.size() - 1; i >= 0; i--){
