@@ -17,4 +17,5 @@
 1004,Database Indices Explained,Edgar Codd
 1013,The Smart Library Blueprint,Project Lead
 1009,Debugging at Midnight,Bug Hunter
-1018,The Agile Coordinator,Scrum Guru1021,Streets of George Town, An Illustrated Guide to Penang’s City Streets and Historic Attractions,Khoo Su Nin
+1018,The Agile Coordinator,Scrum Guru
+1021,Streets of George Town,Khoo Su Nin
