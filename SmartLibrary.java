@@ -1,10 +1,17 @@
 import java.util.Scanner;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.PrintWriter;
+import java.io.IOException;
 
 public class SmartLibrary implements LibraryADT {
     private BookBST catalogue = new BookBST ();
     private BorrowStack borrowStack = new BorrowStack ();
 
     public void runMenu (){
+        loadCatalogueFromFile();
+        
         Scanner sc = new Scanner (System.in);
         int choice = 0;
 
@@ -150,6 +157,7 @@ public class SmartLibrary implements LibraryADT {
     @Override
     public void addBook(int isbn, String title, String author) {
         catalogue.insert(isbn, title, author);
+        saveBookToFile(isbn, title, author);
         System.out.println ("Book added successfully!");
     }
 
@@ -166,5 +174,50 @@ public class SmartLibrary implements LibraryADT {
     @Override
     public void viewLatestHistory() {
         borrowStack.show();
+    }
+
+    private void saveBookToFile(int isbn, String title, String author) {
+        try (FileWriter fw = new FileWriter("catalogue.txt", true);
+            PrintWriter pw = new PrintWriter(fw)) {
+        
+            // Save format: ISBN;Title;Author
+            pw.println(isbn + "," + title + "," + author);
+            
+        } catch (IOException e) {
+            System.out.println("Error saving book to file: " + e.getMessage());
+        }
+    }
+
+    public void loadCatalogueFromFile() {
+        File file = new File("catalogue.txt");
+        
+        // If the file doesn't exist yet, skip loading
+        if (!file.exists()) {
+            return; 
+        }
+
+        try (Scanner fileScanner = new Scanner(file)) {
+            while (fileScanner.hasNextLine()) {
+                String line = fileScanner.nextLine();
+                
+                // Skip empty lines if there are any
+                if (line.trim().isEmpty()) continue; 
+                
+                // Split the line by the semicolon delimiter
+                String[] data = line.split(",");
+                
+                if (data.length == 3) {
+                    int isbn = Integer.parseInt(data[0].trim());
+                    String title = data[1].trim();
+                    String author = data[2].trim();
+                    
+                    catalogue.insert(isbn, title, author);
+                }
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("Inventory file not found.");
+        } catch (NumberFormatException e) {
+            System.out.println("Error parsing data from file: " + e.getMessage());
+        }
     }
 } 
