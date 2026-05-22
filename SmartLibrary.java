@@ -11,7 +11,7 @@ public class SmartLibrary implements LibraryADT {
 
     public void runMenu (){
         loadCatalogueFromFile();
-        
+
         Scanner sc = new Scanner (System.in);
         int choice = 0;
 
@@ -180,7 +180,6 @@ public class SmartLibrary implements LibraryADT {
         try (FileWriter fw = new FileWriter("catalogue.txt", true);
             PrintWriter pw = new PrintWriter(fw)) {
         
-            // Save format: ISBN;Title;Author
             pw.println(isbn + "," + title + "," + author);
             
         } catch (IOException e) {
