@@ -10,7 +10,7 @@ public class SmartLibrary implements LibraryADT {
 
         while (choice != 7){
             printMenu();
-            System.out.println ("Choice : ");
+            System.out.print ("Choice : ");
             if (sc.hasNextInt()){
                 choice = sc.nextInt();
                 sc.nextLine();
@@ -45,7 +45,7 @@ public class SmartLibrary implements LibraryADT {
                     newIsbn = sc.nextInt();
                 } else {
                     System.out.println("Invalid ISBN! Please enter numbers only.");
-                    sc.nextLine();
+                    sc.next();
                 }
                 sc.nextLine();
                 System.out.println ("Enter title : ");
@@ -62,16 +62,21 @@ public class SmartLibrary implements LibraryADT {
                     searchIsbn = sc.nextInt();
                 } else {
                     System.out.println("Invalid ISBN! Please enter numbers only.");
-                    sc.nextLine();
+                    sc.next();
                 }
                 searchBook(searchIsbn);
                 break;
 
-            case 3 :    // Borrow book
+            case 3 :    // Borrow book     
                 System.out.println ("Enter ISBN : ");
-                int borrowIsbn = sc.nextInt();
-                sc.nextLine();
-                borrowBook (borrowIsbn);
+                if (sc.hasNextInt()) {
+                     int borrowIsbn = sc.nextInt();
+                     sc.nextLine();
+                     borrowBook (borrowIsbn);
+                } else {
+                    System.out.println("Invalid ISBN! Please enter numbers only.");
+                    sc.nextLine(); 
+                }
                 break;
 
             case 4 :    // View borrowed history
