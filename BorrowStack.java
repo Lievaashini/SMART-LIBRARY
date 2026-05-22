@@ -60,8 +60,19 @@ public class BorrowStack {
         }
     }
 
-    // EXTRA FEATURE: Use built-in stack size method for the total count
+   // Find a book by ISBN to support single-input return
+    public Book findAndRemove(int isbn) {
+        for (int i = 0; i < stack.size(); i++) {
+            if (stack.get(i).getIsbn() == isbn) {
+                return stack.remove(i); // Removes from stack and passes the details back
+            }
+        }
+        return null; // Book wasn't found in history
+    }
+
+     // EXTRA FEATURE: Use built-in stack size method for the total count
     public int getBorrowedCount() {
         return stack.size();
     }   
+    
 }
