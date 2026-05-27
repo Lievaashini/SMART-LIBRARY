@@ -17,7 +17,7 @@ public class SmartLibrary implements LibraryADT {
         Scanner sc = new Scanner (System.in);
         int choice = 0;
 
-        while (choice != 9){
+        while (choice != 10){
             printMenu();
             System.out.println ("Choice : ");
             if (sc.hasNextInt()){
