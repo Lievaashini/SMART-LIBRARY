@@ -152,6 +152,7 @@ public class SmartLibrary implements LibraryADT {
 
              case 9 :    // Extra feature: View fine records
                 fineManager.displayFines();
+                break; 
 
              case 10 :    // Exit program
                 fineManager.saveFinesToFile();
