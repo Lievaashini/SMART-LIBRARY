@@ -32,6 +32,6 @@ public class Fine {
         System.out.println("ISBN: " + isbn);
         System.out.println("Student Name: " + studentName);
         System.out.println("Overdue Days: " + overdueDays);
-        System.out.println("Fine Amount: $" + amount);
+        System.out.println("Fine Amount: RM" + String.format("%.2f", amount));
     }
 }
