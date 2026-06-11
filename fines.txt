@@ -1,3 +1,9 @@
 1021,Ali bin Abu,3
 1007,Cheong Li Han,4
 1010,Balqis binti Mohd Alif,4
+1006,Suresh a/l Rajendran,2
+1003,Siti Nur Zahrah binti Alias,4
+1015,Adam Iman bin Arif,5
+1008,Nur Hakimin Zarfan bin Zafir,1
+1009,Nurul Hassan bin Baharuddin,6
+1017,Deyandra Devina,3
